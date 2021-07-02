@@ -1,0 +1,26 @@
+{
+  "name": "qg-ddz-core",
+  "version": "0.0.1",
+  "description": "斗地主数据定义及游戏逻辑抽象整理",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts",
+    "debug": "nodemon src/index.ts",
+    "build": "tsc",
+    "release": "tsc & npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lengsehuoyan/ddz-core.git"
+  },
+  "keywords": [
+    "斗地主"
+  ],
+  "author": "lengsehuoyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lengsehuoyan/ddz-core/issues"
+  },
+  "homepage": "https://github.com/lengsehuoyan/ddz-core#readme"
+}
