@@ -12,11 +12,11 @@ export class CardBox {
   }
 
   shuffle(): this {
-    this.cards = this.cards.sort(() => Math.random() > .5 ? 1 : -1);
+    this.cards = this.cards.sort(() => (Math.random() > 0.5 ? 1 : -1));
     return this;
   }
 
-  split() {
+  split(): Card[][] {
     const cards = this.cards.concat();
     const r = [];
     while (cards.length) {
@@ -25,7 +25,7 @@ export class CardBox {
     return r;
   }
 
-  getCards() {
+  getCards(): Card[] {
     return this.cards;
   }
 

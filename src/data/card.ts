@@ -31,8 +31,9 @@ export class Card {
   /**
    * 用于显示
    * 1-15 A=1,2=2,...j=11,q=12,k=13,little-joker=14,big-joker=15
+   * @param showSuit 是否显示花色 最终不影响LITTLE-JOKER, BIG-JOKER
    */
-  get display(): string {
+  display(showSuit: boolean): string {
     const CHARS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     switch (this.source) {
       case 53:
@@ -41,7 +42,7 @@ export class Card {
         return 'BIG-JOKER';
       default:
         const n = (this.source - 1) % 13;
-        return `${CardSuit[this.suit]} - ${CHARS[n]}`;
+        return showSuit ? `${CardSuit[this.suit]}-${CHARS[n]}` : CHARS[n];
     }
   }
 
@@ -54,6 +55,6 @@ export class Card {
   }
 
   toString(): string {
-    return `${this.display}, value = ${this.value}`;
+    return `${this.display(true)}, value = ${this.value}`;
   }
 }

@@ -1,6 +1,7 @@
 import { CardGroupHelper } from '../logic';
 import { CardGroupType, CardGroupTypeValue } from '../enums';
 import { Card } from './card';
+import { moreThan } from '../logic/card-finder';
 
 export type CompareResult = 1 | -1 | typeof NaN;
 export interface CGValueObj {
@@ -8,6 +9,8 @@ export interface CGValueObj {
   len: number;
   value: number;
 }
+
+export type GroupParams = CardGroup | number[] | Card[];
 
 /**
  * 一组牌
@@ -17,10 +20,22 @@ export class CardGroup {
   private type: CardGroupType;
   private groupValue: CGValueObj;
 
-  constructor(cards: Card[]) {
-    this.cards = cards.sort(CardGroup.sort);
+  constructor(cards: Card[] | number[]) {
+    cards = cards || [];
+    const sample = cards.length && cards[0];
+    if (typeof sample === 'number') {
+      cards = cards.map((v) => new Card(Number(v)));
+    }
+    this.cards = (cards as Card[]).sort(CardGroup.sort);
     this.type = CardGroupHelper.GetCardGroupType(this);
     this.groupValue = CardGroupHelper.GetCardGroupValueObj(this);
+  }
+
+  includes(v: Card | number): boolean {
+    if (typeof v === 'number') {
+      return !!this.cards?.find((card) => card.source === v);
+    }
+    return this.cards.includes(v);
   }
 
   compare(target: CardGroup): CompareResult {
@@ -66,5 +81,21 @@ export class CardGroup {
       return v1.len === v2.len ? (v1.value > v2.value ? 1 : -1) : NaN;
     }
     return v1.typeValue > v2.typeValue ? 1 : -1;
+  }
+
+  /**
+   * 从from中查找比target大的数组
+   * @param from
+   * @param target
+   * @returns
+   */
+  static findMoreThan(from: GroupParams, target: GroupParams): number[][] {
+    const toGroup = (param: GroupParams): CardGroup => {
+      if (param instanceof CardGroup) {
+        return param as CardGroup;
+      }
+      return new CardGroup(param);
+    };
+    return moreThan(toGroup(from), toGroup(target));
   }
 }

@@ -1,8 +1,9 @@
 {
   "name": "qg-ddz-core",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "description": "斗地主数据定义及游戏逻辑抽象整理",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/index.ts",
